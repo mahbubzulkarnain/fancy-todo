@@ -27,5 +27,9 @@ module.exports = function (schema) {
         .invalidate('id', `Id is not valid`, this._conditions._id)
     }
     next()
+<<<<<<< HEAD
   });
+=======
+  })
+>>>>>>> Init Server
 };
