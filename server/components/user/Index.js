@@ -1,13 +1,15 @@
 const router = require('express')
-  .Router()
+  .Router();
+
+const {isMe} = require('../../middlewares/Personal');
 
 const User = require('./Controller');
 const Auth = require('../auth/Controller');
 
 router
-  .get('/:id', User.read)
-  .put('/:id', User.update)
-  .delete('/:id', User.delete);
+  .get('/:user', isMe, User.read)
+  .put('/:user', isMe, User.update)
+  .delete('/:user', isMe, User.delete);
 
 router
   .get('/', User.list)

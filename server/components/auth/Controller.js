@@ -33,6 +33,7 @@ class AuthController {
   }
 
   static register({body}, res) {
+    delete body['_id'];
     (new User(body))
       .save((errSave, resSave) => {
         if (errSave) {
