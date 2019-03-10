@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const projectSchema = new mongoose.Schema({
   title: {
     type: String,
+    required: true
   },
   description: {
     type: String,
@@ -10,11 +11,10 @@ const projectSchema = new mongoose.Schema({
   isPublic: {
     type: Boolean,
     default: true
-  },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: (require('../User')).collection.name
   }
 });
 
-module.exports = mongoose.model('Projects', projectSchema);
+projectSchema.statics = {...projectSchema.statics, ...(require('./statics'))};
+projectSchema.plugin(require('./middlewares'));
+
+module.exports = mongoose.model('projects', projectSchema);
