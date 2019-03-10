@@ -1,9 +1,9 @@
 const User = require('../../models/User');
-const {code200, code201, code500} = require('../../helpers/httpRequestCode');
+const {code200, code500} = require('../../helpers/httpRequestCode');
 const msg = require('../../helpers/msg');
 
 class Controller {
-  static list(req, res, next) {
+  static list(req, res) {
     User
       .find()
       .then((props) => {
@@ -16,9 +16,9 @@ class Controller {
       })
   }
 
-  static read({params}, res, next) {
+  static read({params}, res) {
     User
-      .findById(params.id)
+      .findById(params.user)
       .then((prop) => {
         msg
           .json(res, code200, prop)
@@ -29,14 +29,15 @@ class Controller {
       })
   }
 
-  static update({params, body}, res, next) {
+  static update({params, body}, res) {
     User
-      .findById(params.id)
+      .findById(params.user)
       .then((user) => {
         if (!user) {
-          throw  User()
+          throw User()
             .invalidate('user', 'Not found', '')
         }
+        delete body['_id'];
         Object.assign(user, body);
         return user.save()
       })
@@ -50,9 +51,9 @@ class Controller {
       })
   }
 
-  static delete({params}, res, next) {
+  static delete({params}, res) {
     User
-      .findById(params.id)
+      .findById(params.user)
       .then((user) => {
         if (!user) {
           throw  User()
@@ -62,7 +63,7 @@ class Controller {
       })
       .then((prop) => {
         msg
-          .json(res, code201, prop)
+          .json(res, code200, prop)
       })
       .catch((err) => {
         msg

@@ -26,8 +26,9 @@ app
   .use(require('cors')())
   .use(require('morgan')('dev'))
   .use('/auth', require('./components/auth'))
+  .use('/projects', jwt, require('./components/project'))
   .use('/todos', jwt, require('./components/todo'))
-  .use('/user', jwt, require('./components/user'))
+  .use('/users', jwt, require('./components/user'))
   .use('/', require('./components/index'));
 
 app

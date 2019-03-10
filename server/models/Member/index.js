@@ -1,22 +1,32 @@
 const mongoose = require('mongoose');
-
-const {ObjectId} = mongoose.Schema.Types;
+let User = (require('../User')).collection.name;
+let Project = (require('../Project')).collection.name;
 
 const memberSchema = new mongoose.Schema({
-  userId: {
-    type: ObjectId,
-    ref: (require('../Member')).collection.name,
+  user: {
+    type: mongoose.Types.ObjectId,
+    ref: User,
     required: true
   },
-  projectId: {
-    type: ObjectId,
-    ref: (require('../Project')).collection.name,
+  project: {
+    type: mongoose.Types.ObjectId,
+    ref: Project,
     required: true
+  },
+  status: {
+    type: String,
+    enum: ['invited', 'requested', 'approved', 'blocked'],
+    default: 'requested'
   },
   isAdmin: {
     type: Boolean,
     default: false
+  },
+  changedBy: {
+    type: mongoose.Types.ObjectId,
+    ref: User,
+    default: null
   }
 });
 
-module.exports = mongoose.model('Members', memberSchema);
+module.exports = mongoose.model('members', memberSchema);
