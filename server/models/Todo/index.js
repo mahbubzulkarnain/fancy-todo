@@ -1,20 +1,32 @@
 const mongoose = require('mongoose');
+const {ObjectId} = mongoose.Types;
 
 const todoSchema = new mongoose.Schema({
   title: {
-    type: String
+    type: String,
+    required: true
   },
   description: {
-    type: String
+    type: String,
+    default: null
   },
   type: {
     type: String,
-    enum: ['project', 'personal']
+    enum: ['project', 'personal'],
+    default: 'personal'
+  },
+  project: {
+    type: ObjectId,
+    ref: (require('../Project')).collection.name
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: (require('../User')).collection.name
+    type: ObjectId,
+    ref: (require('../User')).collection.name,
+    required: true
   }
 });
 
-module.exports = mongoose.model('Todos', todoSchema);
+todoSchema.statics = {...todoSchema.statics, ...(require('./statics'))};
+todoSchema.plugin(require('./middlewares'));
+
+module.exports = mongoose.model('todos', todoSchema);

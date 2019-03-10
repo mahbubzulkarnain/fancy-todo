@@ -6,7 +6,8 @@ const User = (require('../User')).collection.name;
 
 const todoIitemSchema = new mongoose.Schema({
   title: {
-    type: String
+    type: String,
+    required: true
   },
   status: {
     type: String,
@@ -15,16 +16,24 @@ const todoIitemSchema = new mongoose.Schema({
   },
   assignee: {
     type: ObjectId,
-    ref: User
+    ref: User,
+    default: null
   },
   changedBy: {
     type: ObjectId,
     default: null,
     ref: User
   },
+  todo: {
+    type: ObjectId,
+    ref: (require('../Todo')).collection.name,
+    required: true
+  },
   dueDate: {
     type: Date
   },
 });
 
-module.exports = mongoose.model('TodoItems', todoIitemSchema);
+todoIitemSchema.plugin(require('./middlewares'));
+
+module.exports = mongoose.model('todoitems', todoIitemSchema);

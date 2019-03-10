@@ -24,4 +24,4 @@ module.exports = {
     login: `Invalid username/password`,
     unauthorized: `Unauthorized`
   }
-}
+};
