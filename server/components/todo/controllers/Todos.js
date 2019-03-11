@@ -84,7 +84,7 @@ class TodoController {
         if (!todo) {
           throw Todo().invalidate('todo', 'Not Found', '')
         }
-        if (todo.author !== res.locals.user.id) {
+        if (todo.author+'' !== res.locals.user.id+'') {
           throw Todo()
             .invalidate('Todo', `Unauthorized`, '')
         }

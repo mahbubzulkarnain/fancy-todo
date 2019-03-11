@@ -11,7 +11,7 @@ const {isAuthor} = require('../../middlewares/Personal');
  */
 
 router
-  .patch('/:todo/items/:item/status', isAuthor, Item.status);
+  .post('/:todo/items/:item/status', isAuthor, Item.status);
 
 router
   .get('/:todo/items/:item', isAuthor, Item.read)
@@ -25,7 +25,6 @@ router
 /**
  * Todos
  */
-
 router
   .get('/:todo', isAuthor, Todo.read)
   .put('/:todo', isAuthor, Todo.update)

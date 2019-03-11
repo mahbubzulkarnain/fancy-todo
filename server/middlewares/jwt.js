@@ -9,7 +9,9 @@ module.exports = async function (req, res, next) {
   if (token && token.split(' ')[0] === 'Bearer') {
     try {
       res.locals.user = verify(token.split(' ')[1], process.env.JWT_SECRET);
-      if (await User.findById(res.locals.user.id)) {
+      const user = await User.findOne({email: res.locals.user.email});
+      if (user) {
+        res.locals.user.id = user._id;
         return next()
       }
     } catch (e) {
