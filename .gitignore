@@ -55,6 +55,7 @@ bower_components
 
 ### WebStorm/IntelliJ
 /.idea
+.sonarlint
 *.ipr
 ### System Files
 *.DS_Store
